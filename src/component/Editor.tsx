@@ -1,8 +1,30 @@
-import Editor from "@monaco-editor/react";
+import { formatJsx } from "@/utils/codeFormatter";
+import Editor, { OnMount } from "@monaco-editor/react";
+import { useRef } from "react";
+import { editor } from "monaco-editor";
 
 export default function MonacoEditor() {
+  const editorRef = useRef<editor.IStandaloneCodeEditor>(null);
+
+  const handleEditorMount: OnMount = (editor, monaco) => {
+    editorRef.current = editor;
+
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+      const currentValue = editor.getValue();
+      const cursorPosition = editor.getPosition();
+
+      const formattedCode = formatJsx(currentValue);
+      editor.setValue(formattedCode);
+
+      if (cursorPosition && editorRef.current) {
+        editorRef.current.setPosition(cursorPosition);
+      }
+    });
+  };
+
   return (
     <Editor
+      onMount={handleEditorMount}
       loading={""}
       height="100%"
       defaultLanguage="javascript"
