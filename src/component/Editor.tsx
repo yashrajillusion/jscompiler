@@ -1,9 +1,9 @@
 import { formatJsx } from "@/utils/codeFormatter";
-import Editor, { OnMount } from "@monaco-editor/react";
+import Editor, { OnMount, OnChange } from "@monaco-editor/react";
 import { useRef } from "react";
 import { editor } from "monaco-editor";
 
-export default function MonacoEditor() {
+export default function MonacoEditor({ onChange }: { onChange: OnChange }) {
   const editorRef = useRef<editor.IStandaloneCodeEditor>(null);
 
   const handleEditorMount: OnMount = (editor, monaco) => {
@@ -24,6 +24,7 @@ export default function MonacoEditor() {
 
   return (
     <Editor
+      onChange={onChange}
       onMount={handleEditorMount}
       loading={""}
       height="100%"
