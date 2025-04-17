@@ -1,5 +1,6 @@
 "use client";
 import MonacoEditor from "@/component/Editor";
+import { OutputPanel } from "@/component/Output";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -32,12 +33,14 @@ export default function MonacoEditorMacOSDark() {
           defaultSize={50}
           className="flex flex-col overflow-hidden"
         >
-          <div className="w-full h-screen bg-[#1e1e1e]">
+          <div className="w-full h-screen bg-[#1f1f1f]">
             <MonacoEditor onChange={handleEditorChange} />
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle onDoubleClick={handleDoubleClick} />
-        <ResizablePanel defaultSize={50}></ResizablePanel>
+        <ResizablePanel defaultSize={50}>
+          <OutputPanel code={code} />
+        </ResizablePanel>
       </ResizablePanelGroup>
     </div>
   );
