@@ -1,4 +1,5 @@
 import { UseConsoleOutput } from "@/hooks/useCodeRunner";
+import AdBanner from "./Adbanner";
 
 export function OutputPanel({ iframeRef, logs, clearLogs }: UseConsoleOutput) {
   return (
@@ -38,6 +39,7 @@ export function OutputPanel({ iframeRef, logs, clearLogs }: UseConsoleOutput) {
           </div>
         </div>
       </div>
+      {/* <AdBanner /> */}
       <iframe ref={iframeRef} sandbox="allow-scripts" className="hidden" />
     </div>
   );

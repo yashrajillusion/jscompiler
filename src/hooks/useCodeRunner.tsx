@@ -58,7 +58,7 @@ export function useCodeRunner() {
               window.parent.postMessage({ type, content, fileName }, '*');
             };
 
-            console.log = (...args) => post('log', args.map(String).join(' '));
+            console.log = (...args) => post('log', args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)).join(' '));
             console.warn = (...args) => post('warning', args.map(String).join(' '));
             console.error = (...args) => post('error', args.map(String).join(' '));
 
