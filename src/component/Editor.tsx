@@ -3,7 +3,13 @@ import Editor, { OnMount, OnChange } from "@monaco-editor/react";
 import { useRef } from "react";
 import { editor } from "monaco-editor";
 
-export default function MonacoEditor({ onChange }: { onChange: OnChange }) {
+export default function MonacoEditor({
+  onChange,
+  runCode,
+}: {
+  onChange: OnChange;
+  runCode: (code: string) => void;
+}) {
   const editorRef = useRef<editor.IStandaloneCodeEditor>(null);
 
   const handleEditorMount: OnMount = (editor, monaco) => {
@@ -19,6 +25,11 @@ export default function MonacoEditor({ onChange }: { onChange: OnChange }) {
       if (cursorPosition && editorRef.current) {
         editorRef.current.setPosition(cursorPosition);
       }
+    });
+
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+      const currentValue = editor.getValue();
+      runCode(currentValue);
     });
   };
 
